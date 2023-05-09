@@ -20,7 +20,14 @@
     3. Chiều dài cánh hoa
     4. Chiều rộng cánh hoa
 
-Notion: https://outrageous-jonquil-e0d.notion.site/B-i-t-p-cu-i-k-cd50e2855167473f8ef534a908f25f66
+# Tài liệu:
+- Notion: https://outrageous-jonquil-e0d.notion.site/B-i-t-p-cu-i-k-cd50e2855167473f8ef534a908f25f66
+- Sách trí tuệ nhân tạo phần 1: https://drive.google.com/file/d/1O1lHRMmW3w5mUTSPZLWQAM-2rnsrBf_s/view
+- Sách trí tuệ nhân tạo phần 2: https://drive.google.com/file/d/1135j8osukbcvtT3EL-ZXyshBJfTpSjb9/view
+
+
+
+
 
 # Yêu cầu của thầy Thúc
 Khi report lab 4, phân tích dữ liệu, cần làm nổi bật
