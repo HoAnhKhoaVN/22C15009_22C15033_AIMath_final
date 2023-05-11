@@ -2,25 +2,28 @@ from config import DATA_PATH
 from dataset import IrisDivider, IrisDataset
 from trainer import Trainer
 from model import MultiLayerPerceptron
-
-
-
-
+import torch
 
 
 if __name__ == "__main__":
     # init data
-    features = ['SepalLengthCm']
+    # 'SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm'
+    features = ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm']
 
-    iris_ds = IrisDataset(DATA_PATH, features)
-    train_dataset = IrisDataset(iris_ds.train_df)
-    valid_dataset = IrisDataset(iris_ds.valid_df)
-    test_dataset = IrisDataset(iris_ds.test_df)
+    iris_ds = IrisDivider(DATA_PATH, features.copy())
+    
+    train_dataset = IrisDataset(iris_ds.df_train)
+    valid_dataset = IrisDataset(iris_ds.df_valid)
+    test_dataset = IrisDataset(iris_ds.df_test)
 
     # init model
     input_shape = len(features)
+    print("input shape: ", input_shape)
     hidden_layers = [10]
     output_shape = 3
+    seed = 100
+
+    torch.manual_seed(seed)
     model = MultiLayerPerceptron(input_shape=input_shape,
                                 hidden_layers=hidden_layers,
                                 output_shape=output_shape)
@@ -31,7 +34,10 @@ if __name__ == "__main__":
                       train_dataset=train_dataset,
                       valid_dataset=valid_dataset,
                       test_dataset=test_dataset,
-                      lr = lr)
+                      learning_rate=lr,
+                      batch_size=4,
+                      n_epochs=50)
 
+    trainer.train()
     
     

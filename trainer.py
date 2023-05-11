@@ -1,5 +1,6 @@
 import torch 
 import torch.nn as nn
+from torch.utils.data import DataLoader
 
 class Trainer:
     def __init__(self, model, 
@@ -21,13 +22,13 @@ class Trainer:
         # Train config 
         self.batch_size = batch_size
         self.num_epochs = n_epochs
-        self.optimizer = nn.optim.Adam(self.model.parameters(), lr=learning_rate)
+        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=learning_rate)
         self.criterion = nn.CrossEntropyLoss()
         
 
     def train(self):
-        train_loader = nn.DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
-        val_loader = nn.DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=False)
+        train_loader = DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
+        val_loader = DataLoader(self.valid_dataset, batch_size=self.batch_size, shuffle=False)
 
         for epoch in range(self.num_epochs):
             self.model.train()
@@ -63,7 +64,7 @@ class Trainer:
                     _, preds = torch.max(outputs, 1)
                     val_corrects += torch.sum(preds == labels.data)
 
-                val_loss /= len(self.val_dataset)
-                val_acc = val_corrects.double() / len(self.val_dataset)
+                val_loss /= len(self.valid_dataset)
+                val_acc = val_corrects.double() / len(self.valid_dataset)
 
             print('Epoch {}/{}: Train Loss: {:.4f}, Val Loss: {:.4f}, Val Acc: {:.4f}'.format(epoch+1, self.num_epochs, train_loss, val_loss, val_acc))
