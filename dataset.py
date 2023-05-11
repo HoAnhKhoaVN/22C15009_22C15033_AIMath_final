@@ -1,13 +1,13 @@
-from typing import Text
+from typing import Text, List
 import pandas as pd
 from sklearn.model_selection import  train_test_split
 from config import TEST_SIZE, VAL_SIZE, RANDOM_STATE, LINK_DATA_IRIS
-import numpy as np
 
 class IrisDataset:
     def __init__(
         self,
-        link: Text
+        link: Text,
+        features: List
     ) -> None:
         '''Head data iris
             Id	SepalLengthCm	SepalWidthCm	PetalLengthCm	PetalWidthCm	Species
@@ -21,24 +21,23 @@ class IrisDataset:
         self.df = pd.read_csv(self.link)
         self.set_species = list(set(list(self.df['Species'])))
         # get binary dataset
-        self.binary_df = self.df[self.df['Species'].isin(['Iris-versicolor', 'Iris-virginica'])]
+        self.filter_df = self.df[self.df['Species'].isin(features)]
 
         self.train_df, self.test_df, self.val_df = self.split_train_test()
-
-        y = self.train_df.iloc[:,5].values
-        self.y_train = np.where(y == 'Iris-virginica', -1, 1)
 
 
         
 
     def split_train_test(self):
         train_index, test_index =  train_test_split(
-            list(self.binary_df.index),
+            list(self.filter_df.index),
             test_size = TEST_SIZE,
             random_state = RANDOM_STATE, 
             shuffle = True
         )
+        #endgion
 
+        #region 2: Split test and validation index
         test_index, val_index =  train_test_split(
             list(test_index),
             test_size = VAL_SIZE,
@@ -56,7 +55,27 @@ class IrisDataset:
 
         return df_train, df_test, df_val
 
+class IrisDataset(nn.Dataset):
+    def __init__(self, dataframe):
+        super(IrisDataset, self).__init__()
+        self.dataframe = dataframe
+    
+    def __len__(self):
+        return len(self.dataframe)
+    
+    def __getitem__(self, index):
+        # Get data sample at specified index
+        row = self.dataframe.iloc[index]
 
+        # Load data and label from row
+        data = row.drop('Species').values.astype('float32')
+        label = row['Species']
+
+        # Convert data and label to PyTorch tensor
+        data = torch.tensor(data, dtype=torch.float32)
+        label = torch.tensor(label, dtype=torch.long)
+
+        return data, label
         
 
         
