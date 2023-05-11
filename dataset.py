@@ -2,6 +2,7 @@ from typing import Text
 import pandas as pd
 from sklearn.model_selection import  train_test_split
 from config import TEST_SIZE, VAL_SIZE, RANDOM_STATE, LINK_DATA_IRIS
+import numpy as np
 
 class IrisDataset:
     def __init__(
@@ -24,37 +25,34 @@ class IrisDataset:
 
         self.train_df, self.test_df, self.val_df = self.split_train_test()
 
+        y = self.train_df.iloc[:,5].values
+        self.y_train = np.where(y == 'Iris-virginica', -1, 1)
+
 
         
 
     def split_train_test(self):
-        #region 1: Split train and test index
         train_index, test_index =  train_test_split(
             list(self.binary_df.index),
             test_size = TEST_SIZE,
             random_state = RANDOM_STATE, 
             shuffle = True
         )
-        #endgion
 
-        #region 2: Split test and validation index
         test_index, val_index =  train_test_split(
             list(test_index),
             test_size = VAL_SIZE,
             random_state = RANDOM_STATE, 
             shuffle = True
         )
-        #endgion
 
         print(f"Size train have {len(train_index)} records")
         print(f"Size test have {len(test_index)} records")
         print(f"Size val have {len(val_index)} records")
 
-        #region 3: Filter records by index
         df_train = self.binary_df.filter(items=train_index, axis=0)
         df_test = self.binary_df.filter(items=test_index, axis=0)
         df_val = self.binary_df.filter(items=val_index, axis=0)
-        #endgion
 
         return df_train, df_test, df_val
 
