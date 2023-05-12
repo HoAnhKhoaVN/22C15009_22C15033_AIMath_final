@@ -27,17 +27,19 @@ if __name__ == "__main__":
     model = MultiLayerPerceptron(input_shape=input_shape,
                                 hidden_layers=hidden_layers,
                                 output_shape=output_shape)
+    
+    print(model)
 
-    # Create trainer instance
-    lr = 0.001
-    trainer = Trainer(model, 
-                      train_dataset=train_dataset,
-                      valid_dataset=valid_dataset,
-                      test_dataset=test_dataset,
-                      learning_rate=lr,
-                      batch_size=4,
-                      n_epochs=50)
+    # # Create trainer instance
+    # lr = 0.001
+    # trainer = Trainer(model, 
+    #                   train_dataset=train_dataset,
+    #                   valid_dataset=valid_dataset,
+    #                   test_dataset=test_dataset,
+    #                   learning_rate=lr,
+    #                   batch_size=4,
+    #                   n_epochs=50)
 
-    trainer.train()
+    # trainer.train()
     
     
