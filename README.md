@@ -43,15 +43,9 @@ Khi report lab 4, phân tích dữ liệu, cần làm nổi bật
 
 # Các phương pháp
 
+Nhóm liệt kê và so sánh một vài phương pháp khớp dữ liệu (data fitting):
+- Chương 2: khớp dữ liệu tuyến tính (linear fitting).
+- Chương 3: mô hình hồi quy Logistic.
+- Chương 4: khớp dữ liệu với mô hình Perceptron.
 
-
-
-# Vì sao lại chọn phương pháp này
-
-
-
-# Sao kết quả ra tệ thế
-
-
-
-# Kết luận
+Trong thực nghiệm, kỹ thuật học đạo hàm ngược (gradient descent) được dùng chung cho cả 2 mô hình hồi quy Logistic và mô hình Perceptron. Trong tập dữ liệu rất nhỏ là Iris này, một kỹ thuật học đơn giản hơn là khớp dữ liệu tuyến tính vẫn cho kết quả tương đương với mô hình hồi quy Logistic và mô hình Perceptron. Trong tương lai, chúng tôi dự tính sẽ so sánh các phương pháp trong 1 tập dữ liệu lớn hơn, mà ở đó kỳ vọng kỹ thuật học Đạo hàm ngược sẽ cho kết quả vượt trội.
