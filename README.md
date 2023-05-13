@@ -26,6 +26,24 @@
 - Sách trí tuệ nhân tạo phần 2: https://drive.google.com/file/d/1135j8osukbcvtT3EL-ZXyshBJfTpSjb9/view
 
 
+# Phân công:
+- Khoa:
+1. Perceltron
+2. Data fitting
+
+- Khánh:
+1. Bản chất dữ liệu
+2. Hồi quy  
+
+
+
++ Data Fitting
++ Hồi quy logistic
+    + 
+
+
+
+
 
 
 
