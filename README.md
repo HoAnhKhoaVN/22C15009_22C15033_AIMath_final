@@ -33,7 +33,7 @@
 
 - Khánh:
 1. Bản chất dữ liệu
-2. Hồi quy logistic
+2. Hồi quy  
 
 
 

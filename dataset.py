@@ -5,6 +5,7 @@ from config import TEST_SIZE, VAL_SIZE, RANDOM_STATE, LINK_DATA_IRIS
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset
+import numpy as np
 
 # class IrisDivider:
 #     def __init__(
@@ -80,7 +81,8 @@ from torch.utils.data import Dataset
 class IrisDataset:
     def __init__(
         self,
-        link: Text
+        link: Text,
+        lst_filter_feature: List[int] = [1,2,3,4]
     ) -> None:
         '''Head data iris
             Id	SepalLengthCm	SepalWidthCm	PetalLengthCm	PetalWidthCm	Species
@@ -96,7 +98,22 @@ class IrisDataset:
         # get binary dataset
         self.binary_df = self.df[self.df['Species'].isin(['Iris-setosa', 'Iris-virginica'])]
 
-        self.train_df, self.test_df, self.val_df = self.split_train_test()
+        self.train_df, self.test_df = self.split_train_test()
+
+        self.X_train = self.train_df.iloc[:, lst_filter_feature].values
+
+        # Set label
+        # 1: Iris-setosa
+        # -1: Iris-virginica
+        y = self.train_df.iloc[:,5].values
+        self.y_train = np.where(y == 'Iris-virginica', -1, 1)
+
+
+
+        self.X_test = self.test_df.iloc[:, lst_filter_feature].values
+        y = self.test_df.iloc[:,5].values
+        self.y_test = np.where(y == 'Iris-virginica', -1, 1)
+
 
 
         
@@ -109,22 +126,23 @@ class IrisDataset:
             shuffle = True
         )
 
-        test_index, val_index =  train_test_split(
-            list(test_index),
-            test_size = VAL_SIZE,
-            random_state = RANDOM_STATE, 
-            shuffle = True
-        )
+        # test_index, val_index =  train_test_split(
+        #     list(test_index),
+        #     test_size = VAL_SIZE,
+        #     random_state = RANDOM_STATE, 
+        #     shuffle = True
+        # )
 
         print(f"Size train have {len(train_index)} records")
         print(f"Size test have {len(test_index)} records")
-        print(f"Size val have {len(val_index)} records")
+        # print(f"Size val have {len(val_index)} records")
 
         df_train = self.binary_df.filter(items=train_index, axis=0)
         df_test = self.binary_df.filter(items=test_index, axis=0)
-        df_val = self.binary_df.filter(items=val_index, axis=0)
+        # df_val = self.binary_df.filter(items=val_index, axis=0)
 
-        return df_train, df_test, df_val
+        # return df_train, df_test, df_val
+        return df_train, df_test, 
     
 
 if __name__ == "__main__":
